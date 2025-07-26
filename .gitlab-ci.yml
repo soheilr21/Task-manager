@@ -16,7 +16,7 @@ build-stage:
   tags: 
     - shell-docker
   script:
-    - docker build -t task-manager:$CI_COMMIT_SHORT_SHA .
+    - docker build -t task-manager .
 
 deploy-staging:
   stage: deploy
