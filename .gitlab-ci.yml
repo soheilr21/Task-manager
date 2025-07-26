@@ -15,7 +15,7 @@ test-stage:
 
 build-stage:
   stage: build
-  image: docker:lates
+  image: docker:latest
   script:
     - docker build -t task-manager .
 
