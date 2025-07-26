@@ -1,0 +1,36 @@
+stages:
+  - test
+  - build
+  - deploy
+
+variables:
+  DOCKER_TLS_CERTDIR: ""
+
+test-stage:
+  stage: test
+  image: python:3.11
+  script:
+    - pip install -r requirements.txt
+    - pytest tests/
+
+build-stage:
+  stage: build
+  script:
+    - docker build -t task-manager:$CI_COMMIT_SHORT_SHA .
+
+deploy-staging:
+  stage: deploy
+  only:
+    - staging
+  script:
+    - echo "Deploying to staging..."
+    - ssh $STAGING_USER@$STAGING_HOST 'docker pull ... && docker run ...'
+
+deploy-prod:
+  stage: deploy
+  only:
+    - main
+  when: manual
+  script:
+    - echo "Deploying to production..."
+    - ssh $PROD_USER@$PROD_HOST 'docker pull ... && docker run ...'
