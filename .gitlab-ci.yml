@@ -2,6 +2,8 @@ stages:
   - test
   - build
   - deploy
+variables:
+  DOCKER_DRIVE: overlay2
 
 test-stage:
   stage: test
@@ -13,8 +15,7 @@ test-stage:
 
 build-stage:
   stage: build
-  tags: 
-    - shell-docker
+  image: docker:lates
   script:
     - docker build -t task-manager .
 
@@ -28,9 +29,9 @@ deploy-staging:
 
 deploy-prod:
   stage: deploy
-  only:
-    - main
-  when: manual
+  image: docker:latest
   script:
-    - echo "Deploying to production..."
-    - ssh $PROD_USER@$PROD_HOST 'docker pull ... && docker run ...'
+    - docker stop task-manager || true
+    - docker rm task-manager || true
+    - docker run -d -p 32771:8000 --name task-manager
+
