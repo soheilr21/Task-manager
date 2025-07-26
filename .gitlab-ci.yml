@@ -31,7 +31,7 @@ deploy-prod:
   stage: deploy
   image: docker:latest
   script:
-    - docker stop task-manager || true
-    - docker rm task-manager || true
-    - docker run -d -p 32771:8000 --name task-manager
+    - docker stop tasks || true
+    - docker rm tasks || true
+    - docker run -d -p 32771:8000 --name  task-manager
 
