@@ -33,5 +33,5 @@ deploy-prod:
   script:
     - docker stop tasks || true
     - docker rm tasks || true
-    - docker run -d -p 32771:8000 --name  task-manager
+    - docker run -d -p 32771:8000 --name tasks task-manager
 
