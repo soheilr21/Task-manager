@@ -17,6 +17,11 @@ test-stage:
 build-stage:
   stage: build
   image: docker:latest
+  services:
+    - docker:dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375/
+    DOCKER_TLS_CERTDIR: ""
   script:
     - docker build -t task-manager:$CI_COMMIT_SHORT_SHA .
 
