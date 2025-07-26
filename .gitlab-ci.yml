@@ -16,6 +16,7 @@ test-stage:
 
 build-stage:
   stage: build
+  image: docker:latest
   script:
     - docker build -t task-manager:$CI_COMMIT_SHORT_SHA .
 
